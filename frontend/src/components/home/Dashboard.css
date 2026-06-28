@@ -1,30 +1,102 @@
 /* src/components/Dashboard.css */
 
-/* Container and Wrapper */
+/* Container and Wrapper with Clinical Grid Background */
 .dashboard-wrapper {
   padding: 2.5rem;
-  background-color: #f4f6f8;
+  background-color: #f4f6f9;
+  background-image:
+    linear-gradient(rgba(15, 98, 254, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 98, 254, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
   min-height: 100vh;
 }
 
+/* Dark Slate Clinical Dashboard Banner */
 .dashboard-header-banner {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding: 1.75rem 2.25rem;
+  background: linear-gradient(135deg, #0e1220 0%, #1a2035 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(10, 15, 30, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-header-banner::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: -30px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(15, 98, 254, 0.12) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .dashboard-header-banner__title {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: #161616;
-  margin: 0 0 0.5rem 0;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.4rem 0;
   letter-spacing: -0.02em;
 }
 
 .dashboard-header-banner__subtitle {
   font-size: 0.95rem;
-  color: #525252;
+  color: #a5b4fc;
   margin: 0;
+  font-weight: 500;
+}
+
+/* LIMS Connected Pulsing Status Badge */
+.dashboard-header-banner__badge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 20px;
+  background: rgba(36, 161, 72, 0.12);
+  border: 1px solid rgba(36, 161, 72, 0.25);
+  color: #42be65;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #24a148;
+  box-shadow: 0 0 0 0 rgba(36, 161, 72, 0.6);
+  animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(36, 161, 72, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(36, 161, 72, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(36, 161, 72, 0);
+  }
 }
 
 .home-dashboard-container {
@@ -44,13 +116,13 @@
   padding: 1.5rem;
   border-radius: 12px;
   background: #ffffff;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: visible; /* Required for ::before stripes */
 }
 
-/* Base left accent stripe */
+/* Left Accent Stripe */
 .dashboard-tile::before {
   content: "";
   position: absolute;
@@ -58,7 +130,7 @@
   top: 0;
   bottom: 0;
   width: 5px;
-  background-color: #e0e0e0;
+  background-color: #cbd5e1;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
   transition: all 0.25s ease;
@@ -75,7 +147,7 @@
 /* Hover effects for clickable tiles */
 .home-dashboard-container .dashboard-tile:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
   cursor: pointer;
 }
 
@@ -99,11 +171,11 @@
 }
 
 .tile-icon-svg {
-  transition: transform 0.25s ease;
+  transition: transform 0.28s ease;
 }
 
 .dashboard-tile:hover .tile-icon-svg {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .tile-expand-button {
@@ -113,20 +185,22 @@
   width: 28px;
   height: 28px;
   border-radius: 6px;
-  color: #8d8d8d;
+  color: #94a3b8;
   background: transparent;
   transition: all 0.2s ease;
 }
 
 .dashboard-tile:hover .tile-expand-button {
-  background: #f4f4f4;
-  color: #161616;
+  background: rgba(0, 0, 0, 0.05);
+  color: #1e293b;
 }
 
-/* Card Content */
+/* Card Content - Left-Aligned layout */
 .tile-content-area {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
   flex-grow: 1;
 }
 
@@ -134,14 +208,14 @@
   margin: 0;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #161616;
+  color: #1e293b;
   line-height: 1.25;
 }
 
 .dashboard-tile__subtitle {
   margin: 0.25rem 0 0;
   font-size: 0.75rem;
-  color: #6f6f6f;
+  color: #64748b;
   min-height: 1rem;
 }
 
@@ -157,7 +231,7 @@
 .dashboard-tile__value {
   font-size: 2.25rem;
   font-weight: 700;
-  color: #161616;
+  color: #0f172a;
   line-height: 1;
   margin: 0;
   font-family: var(--cds-font-family-mono, monospace);
@@ -166,8 +240,8 @@
 
 .tile-value-unit {
   font-size: 0.75rem;
-  font-weight: 500;
-  color: #8d8d8d;
+  font-weight: 600;
+  color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -198,173 +272,246 @@
   margin: 0.5rem 0 0;
 }
 
-/* Metric-Specific Custom Themes */
+/* ==========================================================================
+   METRIC-SPECIFIC IMMERSIVE CLINICAL THEMES (SOFT-TINTS)
+   ========================================================================== */
 
-/* 1. Orders In Progress (Blue) */
+/* 1. Orders In Progress (Clinical Blue Theme) */
+.tile-orders-in-progress {
+  background-color: #eff6ff !important;
+  border-color: #bfdbfe !important;
+}
 .tile-orders-in-progress::before {
-  background-color: #0f62fe;
+  background-color: #3b82f6 !important;
 }
 .tile-orders-in-progress .tile-leading-icon-wrapper {
-  background-color: rgba(15, 98, 254, 0.08);
-  color: #0f62fe;
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: #2563eb !important;
+}
+.tile-orders-in-progress .tile-value-unit {
+  color: #3b82f6 !important;
 }
 .tile-orders-in-progress:hover {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(15, 98, 254, 0.02) 100%);
-  border-color: rgba(15, 98, 254, 0.3);
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.12) !important;
+  border-color: #3b82f6 !important;
 }
 
-/* 2. Ready for Validation (Cyan) */
+/* 2. Ready for Validation (Clinical Cyan Theme) */
+.tile-orders-ready-for-validation {
+  background-color: #ecfeff !important;
+  border-color: #a5f3fc !important;
+}
 .tile-orders-ready-for-validation::before {
-  background-color: #0072c3;
+  background-color: #0891b2 !important;
 }
 .tile-orders-ready-for-validation .tile-leading-icon-wrapper {
-  background-color: rgba(0, 114, 195, 0.08);
-  color: #0072c3;
+  background-color: rgba(8, 145, 178, 0.1) !important;
+  color: #0891b2 !important;
+}
+.tile-orders-ready-for-validation .tile-value-unit {
+  color: #0891b2 !important;
 }
 .tile-orders-ready-for-validation:hover {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 114, 195, 0.02) 100%);
-  border-color: rgba(0, 114, 195, 0.3);
+  box-shadow: 0 10px 24px rgba(8, 145, 178, 0.12) !important;
+  border-color: #0891b2 !important;
 }
 
-/* 3. Completed Today (Green) */
+/* 3. Completed Today (Success Emerald Theme) */
+.tile-orders-completed-today {
+  background-color: #f0fdf4 !important;
+  border-color: #bbf7d0 !important;
+}
 .tile-orders-completed-today::before {
-  background-color: #198038;
+  background-color: #16a34a !important;
 }
 .tile-orders-completed-today .tile-leading-icon-wrapper {
-  background-color: rgba(25, 128, 56, 0.08);
-  color: #198038;
-}
-.tile-orders-completed-today:hover {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(25, 128, 56, 0.02) 100%);
-  border-color: rgba(25, 128, 56, 0.3);
+  background-color: rgba(22, 163, 74, 0.1) !important;
+  color: #16a34a !important;
 }
 .tile-orders-completed-today .dashboard-tile__value {
-  color: #198038;
+  color: #15803d !important;
+}
+.tile-orders-completed-today .tile-value-unit {
+  color: #16a34a !important;
+}
+.tile-orders-completed-today:hover {
+  box-shadow: 0 10px 24px rgba(22, 163, 74, 0.12) !important;
+  border-color: #16a34a !important;
 }
 
-/* 4. Partially Completed Today (Indigo/Purple) */
+/* 4. Partially Completed Today (Clinical Indigo Theme) */
+.tile-orders-partially-completed-today {
+  background-color: #f5f3ff !important;
+  border-color: #ddd6fe !important;
+}
 .tile-orders-partially-completed-today::before {
-  background-color: #8a3ffc;
+  background-color: #7c3aed !important;
 }
 .tile-orders-partially-completed-today .tile-leading-icon-wrapper {
-  background-color: rgba(138, 63, 252, 0.08);
-  color: #8a3ffc;
+  background-color: rgba(124, 58, 237, 0.1) !important;
+  color: #7c3aed !important;
+}
+.tile-orders-partially-completed-today .tile-value-unit {
+  color: #7c3aed !important;
 }
 .tile-orders-partially-completed-today:hover {
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    rgba(138, 63, 252, 0.02) 100%
-  );
-  border-color: rgba(138, 63, 252, 0.3);
+  box-shadow: 0 10px 24px rgba(124, 58, 237, 0.12) !important;
+  border-color: #7c3aed !important;
 }
 
-/* 5. Entered By User Today (Teal) */
+/* 5. Orders Entered By Users Today (Medical Teal Theme) */
+.tile-orders-entered-by-user-today {
+  background-color: #f0fdfa !important;
+  border-color: #ccfbf1 !important;
+}
 .tile-orders-entered-by-user-today::before {
-  background-color: #007d79;
+  background-color: #0d9488 !important;
 }
 .tile-orders-entered-by-user-today .tile-leading-icon-wrapper {
-  background-color: rgba(0, 125, 121, 0.08);
-  color: #007d79;
+  background-color: rgba(13, 148, 136, 0.1) !important;
+  color: #0d9488 !important;
+}
+.tile-orders-entered-by-user-today .tile-value-unit {
+  color: #0d9488 !important;
 }
 .tile-orders-entered-by-user-today:hover {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 125, 121, 0.02) 100%);
-  border-color: rgba(0, 125, 121, 0.3);
+  box-shadow: 0 10px 24px rgba(13, 148, 136, 0.12) !important;
+  border-color: #0d9488 !important;
 }
 
-/* 6. Rejected Today (Danger/Red) */
+/* 6. Orders Rejected Today (Warning Coral/Rose Theme) */
+.tile-orders-rejected-today {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+}
 .tile-orders-rejected-today::before {
-  background-color: #da1e28;
+  background-color: #e11d48 !important;
 }
 .tile-orders-rejected-today .tile-leading-icon-wrapper {
-  background-color: rgba(218, 30, 40, 0.08);
-  color: #da1e28;
-}
-.tile-orders-rejected-today:hover {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(218, 30, 40, 0.02) 100%);
-  border-color: rgba(218, 30, 40, 0.3);
+  background-color: rgba(225, 29, 72, 0.1) !important;
+  color: #e11d48 !important;
 }
 .tile-orders-rejected-today .dashboard-tile__value {
-  color: #da1e28;
+  color: #be123c !important;
+}
+.tile-orders-rejected-today .tile-value-unit {
+  color: #e11d48 !important;
+}
+.tile-orders-rejected-today:hover {
+  box-shadow: 0 10px 24px rgba(225, 29, 72, 0.12) !important;
+  border-color: #e11d48 !important;
 }
 
-/* 7. Unprinted Results (Cool Gray/Steel Blue) */
+/* 7. Unprinted Results Today (Cool Blue Theme) */
+.tile-un-printed-results {
+  background-color: #eff6ff !important;
+  border-color: #dbeafe !important;
+}
 .tile-un-printed-results::before {
-  background-color: #4589ff;
+  background-color: #2563eb !important;
 }
 .tile-un-printed-results .tile-leading-icon-wrapper {
-  background-color: rgba(69, 137, 255, 0.08);
-  color: #4589ff;
+  background-color: rgba(37, 99, 235, 0.1) !important;
+  color: #2563eb !important;
+}
+.tile-un-printed-results .tile-value-unit {
+  color: #2563eb !important;
 }
 .tile-un-printed-results:hover {
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    rgba(69, 137, 255, 0.02) 100%
-  );
-  border-color: rgba(69, 137, 255, 0.3);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12) !important;
+  border-color: #2563eb !important;
 }
 
-/* 8. Incoming/Electronic Orders (Slate) */
+/* 8. Electronic/Incoming Orders (Slate/Teal Theme) */
+.tile-incoming-orders {
+  background-color: #f0fdfa !important;
+  border-color: #ccfbf1 !important;
+}
 .tile-incoming-orders::before {
-  background-color: #009d9a;
+  background-color: #0f766e !important;
 }
 .tile-incoming-orders .tile-leading-icon-wrapper {
-  background-color: rgba(0, 157, 154, 0.08);
-  color: #009d9a;
+  background-color: rgba(15, 118, 110, 0.1) !important;
+  color: #0f766e !important;
+}
+.tile-incoming-orders .tile-value-unit {
+  color: #0f766e !important;
 }
 .tile-incoming-orders:hover {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 157, 154, 0.02) 100%);
-  border-color: rgba(0, 157, 154, 0.3);
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.12) !important;
+  border-color: #0f766e !important;
 }
 
-/* 9. Average Turnaround Time (Orange/Amber) */
+/* 9. Average Turnaround Time (Orange Performance Theme) */
+.tile-average-turn-around-time {
+  background-color: #fff7ed !important;
+  border-color: #ffedd5 !important;
+}
 .tile-average-turn-around-time::before {
-  background-color: #e55b00;
+  background-color: #ea580c !important;
 }
 .tile-average-turn-around-time .tile-leading-icon-wrapper {
-  background-color: rgba(229, 91, 0, 0.08);
-  color: #e55b00;
+  background-color: rgba(234, 88, 12, 0.1) !important;
+  color: #ea580c !important;
+}
+.tile-average-turn-around-time .tile-value-unit {
+  color: #ea580c !important;
 }
 .tile-average-turn-around-time:hover {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(229, 91, 0, 0.02) 100%);
-  border-color: rgba(229, 91, 0, 0.3);
+  box-shadow: 0 10px 24px rgba(234, 88, 12, 0.12) !important;
+  border-color: #ea580c !important;
 }
 
-/* 10. Delayed Turnaround (Critical Red Pulse) */
+/* 10. Delayed Turnaround (Alert Crimson Red Theme with border flashing) */
+.tile-delayed-turn-around {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  animation: pulse-delayed-border 2s infinite;
+}
 .tile-delayed-turn-around::before {
-  background-color: #da1e28;
-  animation: pulse-border 2s infinite;
+  background-color: #e11d48 !important;
 }
 .tile-delayed-turn-around .tile-leading-icon-wrapper {
-  background-color: rgba(218, 30, 40, 0.08);
-  color: #da1e28;
-}
-.tile-delayed-turn-around:hover {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(218, 30, 40, 0.03) 100%);
-  border-color: rgba(218, 30, 40, 0.4);
+  background-color: rgba(225, 29, 72, 0.1) !important;
+  color: #e11d48 !important;
 }
 .tile-delayed-turn-around .dashboard-tile__value {
-  color: #da1e28;
+  color: #be123c !important;
+}
+.tile-delayed-turn-around .tile-value-unit {
+  color: #e11d48 !important;
+}
+.tile-delayed-turn-around:hover {
+  box-shadow: 0 10px 24px rgba(225, 29, 72, 0.15) !important;
+  border-color: #e11d48 !important;
 }
 
-@keyframes pulse-border {
+@keyframes pulse-delayed-border {
   0% {
-    opacity: 1;
+    border-color: #fecdd3;
   }
   50% {
-    opacity: 0.6;
+    border-color: #fb7185;
+    box-shadow: 0 0 8px rgba(225, 29, 72, 0.15);
   }
   100% {
-    opacity: 1;
+    border-color: #fecdd3;
   }
 }
 
-/* Responsive adjustments */
+/* ==========================================================================
+   RESPONSIVE DESIGN SYSTEM
+   ========================================================================== */
 @media (max-width: 1200px) {
   .home-dashboard-container {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
+  }
+  .dashboard-header-banner {
+    padding: 1.5rem 1.75rem;
+  }
+  .dashboard-header-banner__title {
+    font-size: 1.65rem;
   }
 }
 
@@ -376,6 +523,11 @@
   .dashboard-wrapper,
   .dashboard-view {
     padding: 1.5rem;
+  }
+  .dashboard-header-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 }
 

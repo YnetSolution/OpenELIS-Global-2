@@ -525,13 +525,19 @@ const HomeDashBoard: React.FC<DashBoardProps> = () => {
       {selectedTile == null ? (
         <div className="dashboard-wrapper">
           <div className="dashboard-header-banner">
-            <h1 className="dashboard-header-banner__title">
-              Laboratory Analytics
-            </h1>
-            <p className="dashboard-header-banner__subtitle">
-              Real-time monitoring of clinical specimen workflows, validations,
-              and turnaround times
-            </p>
+            <div className="dashboard-header-banner__text">
+              <h1 className="dashboard-header-banner__title">
+                Welcome back, {userSessionDetails?.firstName || "Practitioner"}
+              </h1>
+              <p className="dashboard-header-banner__subtitle">
+                South Sudan National Public Health Laboratory • Real-Time
+                Diagnostics & Analytics
+              </p>
+            </div>
+            <div className="dashboard-header-banner__badge">
+              <span className="badge-dot"></span>
+              LIMS Connected
+            </div>
           </div>
           <div className="home-dashboard-container">
             {tileList.map((tile, index) => {
