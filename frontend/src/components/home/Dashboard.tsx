@@ -523,41 +523,56 @@ const HomeDashBoard: React.FC<DashBoardProps> = () => {
       {loading && <Loading description="Loading Dasboard..." />}
       {notificationVisible === true ? <AlertDialog /> : ""}
       {selectedTile == null ? (
-        <div className="home-dashboard-container">
-          {tileList.map((tile, index) => {
-            const TileIcon = TILE_ICONS[tile.type];
-            return (
-              <ClickableTile
-                key={index}
-                className="dashboard-tile"
-                onClick={() => handleMaximizeClick(tile)}
-              >
-                {TileIcon && (
-                  <div className="tile-leading-icon">
-                    <TileIcon size={28} />
+        <div className="dashboard-wrapper">
+          <div className="dashboard-header-banner">
+            <h1 className="dashboard-header-banner__title">
+              Laboratory Analytics
+            </h1>
+            <p className="dashboard-header-banner__subtitle">
+              Real-time monitoring of clinical specimen workflows, validations,
+              and turnaround times
+            </p>
+          </div>
+          <div className="home-dashboard-container">
+            {tileList.map((tile, index) => {
+              const TileIcon = TILE_ICONS[tile.type];
+              const tileClass = `dashboard-tile tile-${tile.type.toLowerCase().replace(/_/g, "-")}`;
+              return (
+                <ClickableTile
+                  key={index}
+                  className={tileClass}
+                  onClick={() => handleMaximizeClick(tile)}
+                >
+                  <div className="tile-top-bar">
+                    {TileIcon && (
+                      <div className="tile-leading-icon-wrapper">
+                        <TileIcon size={24} className="tile-icon-svg" />
+                      </div>
+                    )}
+                    <span className="tile-expand-button">
+                      <Maximize size={16} />
+                    </span>
                   </div>
-                )}
-                <h5 className="dashboard-tile__title">{tile.title}</h5>
-                <p className="dashboard-tile__subtitle">
-                  {tile.subTitle ?? " "}
-                </p>
-                <h2 className="dashboard-tile__value">{tile.value}</h2>
-
-                <div className="tile-icon">
-                  <div
-                    onClick={() => handleMaximizeClick(tile)}
-                    className="icon-wrapper"
-                  >
-                    <Maximize
-                      id="maximizeIcon"
-                      size={20}
-                      className="clickable-icon"
-                    />
+                  <div className="tile-content-area">
+                    <h5 className="dashboard-tile__title">{tile.title}</h5>
+                    <p className="dashboard-tile__subtitle">
+                      {tile.subTitle ?? " "}
+                    </p>
+                    <div className="tile-value-container">
+                      <span className="dashboard-tile__value">
+                        {tile.value}
+                      </span>
+                      <span className="tile-value-unit">
+                        {tile.type === "AVERAGE_TURN_AROUND_TIME"
+                          ? "hrs"
+                          : "cases"}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </ClickableTile>
-            );
-          })}
+                </ClickableTile>
+              );
+            })}
+          </div>
         </div>
       ) : (
         <div className="dashboard-view">

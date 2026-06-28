@@ -1,125 +1,386 @@
 /* src/components/Dashboard.css */
+
+/* Container and Wrapper */
+.dashboard-wrapper {
+  padding: 2.5rem;
+  background-color: #f4f6f8;
+  min-height: 100vh;
+}
+
+.dashboard-header-banner {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1.5rem;
+}
+
+.dashboard-header-banner__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #161616;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.dashboard-header-banner__subtitle {
+  font-size: 0.95rem;
+  color: #525252;
+  margin: 0;
+}
+
 .home-dashboard-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 50px;
-  padding: 50px;
+  gap: 1.5rem;
+  padding: 0;
 }
 
 .dashboard-view {
-  padding: 50px;
-}
-.dashboard-tile {
-  position: relative;
-  padding: 20px;
-  border-radius: 3px;
-  background-color: #f4f4f4;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-  /* Carbon's ClickableTile clips its content with overflow: hidden, which
-   * eats absolutely-positioned pseudo-elements. Allow them to render. */
-  overflow: visible;
+  padding: 2.5rem;
 }
 
-/* Left-edge stripe painted as a pseudo-element (rather than border-left or
- * inset box-shadow) so Carbon's own tile shadow rules can't override it.
- * Light green by default, Carbon blue on hover. */
+/* Premium Dashboard Tile Base */
+.dashboard-tile {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible; /* Required for ::before stripes */
+}
+
+/* Base left accent stripe */
 .dashboard-tile::before {
   content: "";
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 4px;
-  background-color: #6fdc8c;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  transition: background-color 0.15s ease;
+  width: 5px;
+  background-color: #e0e0e0;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  transition: all 0.25s ease;
 }
 
-.dashboard-tile:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+/* Card-specific height & display in grid */
+.home-dashboard-container .dashboard-tile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 175px;
 }
 
-.dashboard-tile:hover::before {
-  background-color: #0f62fe;
+/* Hover effects for clickable tiles */
+.home-dashboard-container .dashboard-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
 }
 
-.tile-leading-icon {
-  display: inline-flex;
+/* Tile Header Row */
+.tile-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+
+.tile-leading-icon-wrapper {
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  color: #0f62fe;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+}
+
+.tile-icon-svg {
+  transition: transform 0.25s ease;
+}
+
+.dashboard-tile:hover .tile-icon-svg {
+  transform: scale(1.1);
+}
+
+.tile-expand-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: #8d8d8d;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.dashboard-tile:hover .tile-expand-button {
+  background: #f4f4f4;
+  color: #161616;
+}
+
+/* Card Content */
+.tile-content-area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .dashboard-tile__title {
   margin: 0;
-  font-weight: var(--cds-body-01-font-weight, 400);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #161616;
+  line-height: 1.25;
 }
 
 .dashboard-tile__subtitle {
   margin: 0.25rem 0 0;
-  min-height: 1.125rem;
-  color: var(--cds-text-secondary, #525252);
-  font-size: var(--cds-body-compact-01-font-size, 0.875rem);
-  font-weight: var(--cds-body-compact-01-font-weight, 400);
-  line-height: var(--cds-body-compact-01-line-height, 1.28572);
-  letter-spacing: var(--cds-body-compact-01-letter-spacing, 0.16px);
+  font-size: 0.75rem;
+  color: #6f6f6f;
+  min-height: 1rem;
+}
+
+/* Value styling */
+.tile-value-container {
+  margin-top: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding-top: 0.5rem;
 }
 
 .dashboard-tile__value {
-  margin: 0.5rem 0 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #161616;
+  line-height: 1;
+  margin: 0;
+  font-family: var(--cds-font-family-mono, monospace);
+  letter-spacing: -0.03em;
 }
 
+.tile-value-unit {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #8d8d8d;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Legacy absolute-positioned icon wrapper compat if needed elsewhere */
 .tile-icon {
   position: absolute;
-  top: 0.1rem;
-  right: 0.1rem;
+  top: 0.5rem;
+  right: 0.5rem;
 }
-
 .icon-wrapper {
-  transition: border-color 0.3s; /* Add a smooth transition effect for the border */
+  transition: border-color 0.3s;
 }
-
 .icon-wrapper:hover {
-  border: 1px solid #78a9ff; /* Add a blue border on hover */
+  border: 1px solid #78a9ff;
   cursor: pointer;
 }
 
 .dashboard-tile__title-view {
   margin: 0;
 }
-
 .dashboard-tile__subtitle-view {
   margin: 0.25rem 0 0;
   min-height: 1.5rem;
   color: var(--cds-text-secondary, #525252);
 }
-
 .dashboard-tile__value-view {
   margin: 0.5rem 0 0;
 }
 
-@media (max-width: 925px) {
+/* Metric-Specific Custom Themes */
+
+/* 1. Orders In Progress (Blue) */
+.tile-orders-in-progress::before {
+  background-color: #0f62fe;
+}
+.tile-orders-in-progress .tile-leading-icon-wrapper {
+  background-color: rgba(15, 98, 254, 0.08);
+  color: #0f62fe;
+}
+.tile-orders-in-progress:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(15, 98, 254, 0.02) 100%);
+  border-color: rgba(15, 98, 254, 0.3);
+}
+
+/* 2. Ready for Validation (Cyan) */
+.tile-orders-ready-for-validation::before {
+  background-color: #0072c3;
+}
+.tile-orders-ready-for-validation .tile-leading-icon-wrapper {
+  background-color: rgba(0, 114, 195, 0.08);
+  color: #0072c3;
+}
+.tile-orders-ready-for-validation:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 114, 195, 0.02) 100%);
+  border-color: rgba(0, 114, 195, 0.3);
+}
+
+/* 3. Completed Today (Green) */
+.tile-orders-completed-today::before {
+  background-color: #198038;
+}
+.tile-orders-completed-today .tile-leading-icon-wrapper {
+  background-color: rgba(25, 128, 56, 0.08);
+  color: #198038;
+}
+.tile-orders-completed-today:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(25, 128, 56, 0.02) 100%);
+  border-color: rgba(25, 128, 56, 0.3);
+}
+.tile-orders-completed-today .dashboard-tile__value {
+  color: #198038;
+}
+
+/* 4. Partially Completed Today (Indigo/Purple) */
+.tile-orders-partially-completed-today::before {
+  background-color: #8a3ffc;
+}
+.tile-orders-partially-completed-today .tile-leading-icon-wrapper {
+  background-color: rgba(138, 63, 252, 0.08);
+  color: #8a3ffc;
+}
+.tile-orders-partially-completed-today:hover {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(138, 63, 252, 0.02) 100%
+  );
+  border-color: rgba(138, 63, 252, 0.3);
+}
+
+/* 5. Entered By User Today (Teal) */
+.tile-orders-entered-by-user-today::before {
+  background-color: #007d79;
+}
+.tile-orders-entered-by-user-today .tile-leading-icon-wrapper {
+  background-color: rgba(0, 125, 121, 0.08);
+  color: #007d79;
+}
+.tile-orders-entered-by-user-today:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 125, 121, 0.02) 100%);
+  border-color: rgba(0, 125, 121, 0.3);
+}
+
+/* 6. Rejected Today (Danger/Red) */
+.tile-orders-rejected-today::before {
+  background-color: #da1e28;
+}
+.tile-orders-rejected-today .tile-leading-icon-wrapper {
+  background-color: rgba(218, 30, 40, 0.08);
+  color: #da1e28;
+}
+.tile-orders-rejected-today:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(218, 30, 40, 0.02) 100%);
+  border-color: rgba(218, 30, 40, 0.3);
+}
+.tile-orders-rejected-today .dashboard-tile__value {
+  color: #da1e28;
+}
+
+/* 7. Unprinted Results (Cool Gray/Steel Blue) */
+.tile-un-printed-results::before {
+  background-color: #4589ff;
+}
+.tile-un-printed-results .tile-leading-icon-wrapper {
+  background-color: rgba(69, 137, 255, 0.08);
+  color: #4589ff;
+}
+.tile-un-printed-results:hover {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(69, 137, 255, 0.02) 100%
+  );
+  border-color: rgba(69, 137, 255, 0.3);
+}
+
+/* 8. Incoming/Electronic Orders (Slate) */
+.tile-incoming-orders::before {
+  background-color: #009d9a;
+}
+.tile-incoming-orders .tile-leading-icon-wrapper {
+  background-color: rgba(0, 157, 154, 0.08);
+  color: #009d9a;
+}
+.tile-incoming-orders:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 157, 154, 0.02) 100%);
+  border-color: rgba(0, 157, 154, 0.3);
+}
+
+/* 9. Average Turnaround Time (Orange/Amber) */
+.tile-average-turn-around-time::before {
+  background-color: #e55b00;
+}
+.tile-average-turn-around-time .tile-leading-icon-wrapper {
+  background-color: rgba(229, 91, 0, 0.08);
+  color: #e55b00;
+}
+.tile-average-turn-around-time:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(229, 91, 0, 0.02) 100%);
+  border-color: rgba(229, 91, 0, 0.3);
+}
+
+/* 10. Delayed Turnaround (Critical Red Pulse) */
+.tile-delayed-turn-around::before {
+  background-color: #da1e28;
+  animation: pulse-border 2s infinite;
+}
+.tile-delayed-turn-around .tile-leading-icon-wrapper {
+  background-color: rgba(218, 30, 40, 0.08);
+  color: #da1e28;
+}
+.tile-delayed-turn-around:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(218, 30, 40, 0.03) 100%);
+  border-color: rgba(218, 30, 40, 0.4);
+}
+.tile-delayed-turn-around .dashboard-tile__value {
+  color: #da1e28;
+}
+
+@keyframes pulse-border {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
   .home-dashboard-container {
     grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    padding: 22px;
+    gap: 1.25rem;
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 800px) {
   .home-dashboard-container {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .dashboard-wrapper,
+  .dashboard-view {
+    padding: 1.5rem;
   }
 }
 
-@media (max-width: 846px) {
-  .dashboard-view {
-    padding: 0;
+@media (max-width: 480px) {
+  .home-dashboard-container {
+    grid-template-columns: 1fr;
   }
 }
