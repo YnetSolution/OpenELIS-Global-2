@@ -125,33 +125,47 @@ function Login(props) {
     // Add cache-busting parameter to prevent stale logo display after upload
     const logoSrc = loginLogoUrl
       ? `${config.serverBaseUrl}${loginLogoUrl}?v=${logoVersion}`
-      : `images/openelis_logo_full.png`;
+      : `images/primary-navigation.png`;
 
     return (
-      <>
-        <Column lg={6} md={0} sm={0} />
-        <Column lg={4} md={8} sm={4}>
-          <picture>
-            <img
-              src={logoSrc}
-              alt="fullsize logo"
-              width="300"
-              height="56"
-              style={{ objectFit: "contain" }}
-              onError={(e) => {
-                // Fallback to default logo if custom logo fails to load
-                e.target.src = `images/openelis_logo_full.png`;
-              }}
-            />
-          </picture>
-        </Column>
-        <Column lg={6} md={0} sm={0} />
-        <Column lg={6} md={0} sm={0} />
-        <Column lg={4} md={8} sm={4}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+          maxWidth: "340px",
+          margin: "0 auto",
+          marginBottom: "1rem",
+        }}
+      >
+        <picture style={{ display: "block", marginBottom: "1.5rem" }}>
+          <img
+            src={logoSrc}
+            alt="fullsize logo"
+            width="240"
+            height="240"
+            style={{
+              objectFit: "contain",
+              maxHeight: "240px",
+            }}
+            onError={(e) => {
+              // Fallback to default logo if custom logo fails to load
+              e.target.src = `images/primary-navigation.png`;
+            }}
+          />
+        </picture>
+        <p
+          style={{
+            fontSize: "0.875rem",
+            color: "var(--cds-text-secondary)",
+            lineHeight: "1.4",
+            textAlign: "center",
+          }}
+        >
           <FormattedMessage id="login.notice.message" />
-        </Column>
-        <Column lg={6} md={0} sm={0} />
-      </>
+        </p>
+      </div>
     );
   };
 
@@ -241,141 +255,137 @@ function Login(props) {
       >
         {notificationVisible === true ? <AlertDialog /> : ""}
         <div className="oe-loginPageCenter">
-          <Grid fullWidth={true}>{loginMessage()}</Grid>
-          <Grid fullWidth={false}>
-            <Column lg={16}>
-              <br />
-              <br />
-            </Column>
-            <Column lg={6} md={0} sm={0} />
-            <Column lg={4} md={8} sm={4}>
-              <Section>
-                {samlRedirectInitiated ? (
-                  <Stack gap={5}>
-                    <FormLabel>
-                      <Heading>
-                        <FormattedMessage id="login.title" />
-                      </Heading>
-                    </FormLabel>
-                    <div style={{ textAlign: "center", padding: "2rem" }}>
-                      <Loading
-                        description={props.intl.formatMessage({
-                          id: "login.redirecting.sso",
-                        })}
-                        withOverlay={false}
-                      />
-                      <p style={{ marginTop: "1rem" }}>
-                        <FormattedMessage id="login.redirecting.sso" />
-                      </p>
-                    </div>
-                  </Stack>
-                ) : (
-                  <Formik
-                    initialValues={{
-                      username: "",
-                      password: "",
-                    }}
-                    onSubmit={(values) => doLogin(values)}
-                  >
-                    {({ isValid, handleChange, handleSubmit }) => (
-                      <Form onSubmit={handleSubmit} onChange={handleChange}>
-                        <Stack gap={5}>
-                          <FormLabel>
-                            <Heading>
-                              <FormattedMessage id="login.title" />
-                            </Heading>
-                          </FormLabel>
-                          {configurationProperties?.useFormLogin == "true" && (
-                            <>
-                              <TextInput
-                                id="loginName"
-                                invalidText={props.intl.formatMessage({
-                                  id: "login.msg.username.missing",
-                                })}
-                                labelText={props.intl.formatMessage({
-                                  id: "login.msg.username",
-                                })}
-                                hideLabel={true}
-                                placeholder={props.intl.formatMessage({
-                                  id: "login.msg.username",
-                                })}
-                                autoComplete="off"
-                                ref={firstInput}
-                                onFocus={markUserActive}
-                                onChange={markUserActive}
-                              />
-                              <PasswordInput
-                                id="password"
-                                invalidText={props.intl.formatMessage({
-                                  id: "login.msg.password.missing",
-                                })}
-                                labelText={props.intl.formatMessage({
-                                  id: "login.msg.password",
-                                })}
-                                hideLabel={true}
-                                placeholder={props.intl.formatMessage({
-                                  id: "login.msg.password",
-                                })}
-                                onFocus={markUserActive}
-                                onChange={markUserActive}
-                              />
-                              <Stack orientation="horizontal">
-                                <Button
-                                  type="submit"
-                                  disabled={!isValid}
-                                  data-cy="loginButton"
-                                >
-                                  <FormattedMessage id="label.button.login" />
-                                  <Loading
-                                    small={true}
-                                    withOverlay={false}
-                                    className={submitting ? "show" : "hidden"}
-                                  />
-                                </Button>
-
-                                <Button
-                                  data-cy="changePassword"
-                                  type="button"
-                                  onClick={() => {
-                                    window.location.href =
-                                      "/ChangePasswordLogin";
-                                  }}
-                                >
-                                  <FormattedMessage id="label.button.changepassword" />
-                                </Button>
-                              </Stack>
-                            </>
-                          )}
-                          {configurationProperties?.useSaml == "true" &&
-                            configurationProperties?.useSamlLoginPage !==
-                              "false" && (
+          {loginMessage()}
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "340px",
+              marginTop: "1rem",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            <Section>
+              {samlRedirectInitiated ? (
+                <Stack gap={5}>
+                  <FormLabel>
+                    <Heading>
+                      <FormattedMessage id="login.title" />
+                    </Heading>
+                  </FormLabel>
+                  <div style={{ textAlign: "center", padding: "2rem" }}>
+                    <Loading
+                      description={props.intl.formatMessage({
+                        id: "login.redirecting.sso",
+                      })}
+                      withOverlay={false}
+                    />
+                    <p style={{ marginTop: "1rem" }}>
+                      <FormattedMessage id="login.redirecting.sso" />
+                    </p>
+                  </div>
+                </Stack>
+              ) : (
+                <Formik
+                  initialValues={{
+                    username: "",
+                    password: "",
+                  }}
+                  onSubmit={(values) => doLogin(values)}
+                >
+                  {({ isValid, handleChange, handleSubmit }) => (
+                    <Form onSubmit={handleSubmit} onChange={handleChange}>
+                      <Stack gap={5}>
+                        <FormLabel>
+                          <Heading>
+                            <FormattedMessage id="login.title" />
+                          </Heading>
+                        </FormLabel>
+                        {configurationProperties?.useFormLogin == "true" && (
+                          <>
+                            <TextInput
+                              id="loginName"
+                              invalidText={props.intl.formatMessage({
+                                id: "login.msg.username.missing",
+                              })}
+                              labelText={props.intl.formatMessage({
+                                id: "login.msg.username",
+                              })}
+                              hideLabel={true}
+                              placeholder={props.intl.formatMessage({
+                                id: "login.msg.username",
+                              })}
+                              autoComplete="off"
+                              ref={firstInput}
+                              onFocus={markUserActive}
+                              onChange={markUserActive}
+                            />
+                            <PasswordInput
+                              id="password"
+                              invalidText={props.intl.formatMessage({
+                                id: "login.msg.password.missing",
+                              })}
+                              labelText={props.intl.formatMessage({
+                                id: "login.msg.password",
+                              })}
+                              hideLabel={true}
+                              placeholder={props.intl.formatMessage({
+                                id: "login.msg.password",
+                              })}
+                              onFocus={markUserActive}
+                              onChange={markUserActive}
+                            />
+                            <Stack orientation="horizontal">
                               <Button
+                                type="submit"
+                                disabled={!isValid}
+                                data-cy="loginButton"
+                              >
+                                <FormattedMessage id="label.button.login" />
+                                <Loading
+                                  small={true}
+                                  withOverlay={false}
+                                  className={submitting ? "show" : "hidden"}
+                                />
+                              </Button>
+
+                              <Button
+                                data-cy="changePassword"
                                 type="button"
-                                renderIcon={HardwareSecurityModule}
                                 onClick={() => {
-                                  // Use full-page redirect instead of popup to avoid popup blockers
-                                  window.location.href =
-                                    config.serverBaseUrl +
-                                    "/LoginPage?useSAML=true&redirect=true";
+                                  window.location.href = "/ChangePasswordLogin";
                                 }}
                               >
-                                <FormattedMessage id="label.button.login.sso" />
+                                <FormattedMessage id="label.button.changepassword" />
                               </Button>
-                            )}
-                          {configurationProperties?.useOauth == "true" &&
-                            renderOauthButtons()}
-                        </Stack>
-                      </Form>
-                    )}
-                  </Formik>
-                )}
-              </Section>
-            </Column>
-            <Column lg={6} md={0} sm={0} />
-            <Column lg={0} md={0} sm={0}>
-              {loginMessage()}
-            </Column>
-          </Grid>
+                            </Stack>
+                          </>
+                        )}
+                        {configurationProperties?.useSaml == "true" &&
+                          configurationProperties?.useSamlLoginPage !==
+                            "false" && (
+                            <Button
+                              type="button"
+                              renderIcon={HardwareSecurityModule}
+                              onClick={() => {
+                                // Use full-page redirect instead of popup to avoid popup blockers
+                                window.location.href =
+                                  config.serverBaseUrl +
+                                  "/LoginPage?useSAML=true&redirect=true";
+                              }}
+                            >
+                              <FormattedMessage id="label.button.login.sso" />
+                            </Button>
+                          )}
+                        {configurationProperties?.useOauth == "true" &&
+                          renderOauthButtons()}
+                      </Stack>
+                    </Form>
+                  )}
+                </Formik>
+              )}
+            </Section>
+          </div>
         </div>
       </div>
     </>
