@@ -60,7 +60,7 @@ const mockUserSessionDetails = {
 
 const mockConfigurationContext = {
   configurationProperties: {
-    BANNER_TEXT: "Test LIMS",
+    BANNER_TEXT: "South Sudan National Public Health Laboratory",
     releaseNumber: "3.2.1",
   },
   reloadConfiguration: vi.fn(),

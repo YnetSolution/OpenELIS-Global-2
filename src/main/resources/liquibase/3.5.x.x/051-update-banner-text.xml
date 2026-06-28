@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!--
+      Rename default banner text from "Test LIMS" to "South Sudan National Public Health Laboratory"
+    -->
+
+    <changeSet author="openelis" id="update-banner-text-to-south-sudan">
+        <preConditions onFail="MARK_RAN">
+            <tableExists schemaName="clinlims" tableName="localization_value"/>
+        </preConditions>
+        <sql>
+            UPDATE clinlims.localization_value
+               SET value = 'South Sudan National Public Health Laboratory',
+                   last_updated = NOW()
+             WHERE localization_id = (SELECT id FROM clinlims.localization WHERE description = 'Site information banner test' LIMIT 1)
+               AND value = 'Test LIMS';
+        </sql>
+        <rollback>
+            UPDATE clinlims.localization_value
+               SET value = 'Test LIMS',
+                   last_updated = NOW()
+             WHERE localization_id = (SELECT id FROM clinlims.localization WHERE description = 'Site information banner test' LIMIT 1)
+               AND value = 'South Sudan National Public Health Laboratory';
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
