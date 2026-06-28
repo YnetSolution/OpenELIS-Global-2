@@ -23,7 +23,7 @@ describe("Layout Full Integration (Smoke Tests)", () => {
       if (url.includes("configuration-properties")) {
         callback({
           releaseNumber: "3.2.1.0",
-          BANNER_TEXT: "Test LIMS",
+          BANNER_TEXT: "South Sudan National Public Health Laboratory",
         });
       } else if (url === "/rest/menu") {
         // Realistic menu structure matching database

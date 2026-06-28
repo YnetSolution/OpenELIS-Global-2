@@ -135,4 +135,7 @@
   <!-- OGC-949 / OGC-766: cascade test_sample_handling_history when its handling row is deleted -->
   <include relativeToChangelogFile="true" file="050-tsh-history-fk-cascade.xml"/>
 
+  <!-- Update default banner text to South Sudan National Public Health Laboratory -->
+  <include relativeToChangelogFile="true" file="051-update-banner-text.xml"/>
+
 </databaseChangeLog>
