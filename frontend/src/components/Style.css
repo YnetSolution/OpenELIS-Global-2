@@ -149,13 +149,15 @@ li.clickableUserDetails:hover {
   align-items: center;
   box-sizing: border-box;
   background-color: #ffffff;
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.2) 30%,
-    rgba(255, 255, 255, 0.75) 60%,
-    #ffffff 88%
-  ), url('/images/Background.png');
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 30%,
+      rgba(255, 255, 255, 0.75) 60%,
+      #ffffff 88%
+    ),
+    url("/images/Background.png");
   background-repeat: no-repeat;
   background-position: left center;
   background-size: cover;
@@ -1205,4 +1207,25 @@ nav.cds--side-nav .cds--side-nav__link::before {
   border-radius: 4px;
   padding: 1rem;
   background-color: #f4f4f4;
+}
+
+/* Right navigation logo styles */
+.right-logo-container {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  margin-right: 1.5rem;
+  height: 100%;
+}
+
+.right-logo {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 600px) {
+  .right-logo-container {
+    display: none; /* Hide secondary logo on small screens to save space */
+  }
 }

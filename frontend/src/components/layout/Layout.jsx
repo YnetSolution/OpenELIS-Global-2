@@ -64,11 +64,7 @@ export default function Layout(props) {
             : "main",
     // Admin, storage, and analyzer workflows benefit from locked navigation.
     // All other routes default to collapsed (rail) mode.
-    defaultMode: pageDefaultMode
-      ? pageDefaultMode
-      : isAdminContext || isStorageContext || isAnalyzerContext
-        ? "lock"
-        : "close",
+    defaultMode: pageDefaultMode ? pageDefaultMode : "lock",
   };
 
   // Lock mode support - push content when sidenav is locked

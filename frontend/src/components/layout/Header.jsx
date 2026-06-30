@@ -295,7 +295,7 @@ function OEHeader({
     // Add cache-busting parameter to prevent stale logo display after upload
     const logoSrc = headerLogoUrl
       ? `${config.serverBaseUrl}${headerLogoUrl}?v=${logoVersion}`
-      : `/images/primary-navigation.png`;
+      : `/images/nphiss.jpeg`;
 
     return (
       <>
@@ -309,7 +309,7 @@ function OEHeader({
               // Fallback to default logo if custom logo fails to load
               // Clear onError to prevent infinite loop if fallback also fails
               e.target.onerror = null;
-              e.target.src = `/images/primary-navigation.png`;
+              e.target.src = `/images/nphiss.jpeg`;
             }}
           />
         </picture>
@@ -764,6 +764,13 @@ function OEHeader({
                 helpOpen={helpOpen}
                 handlePanelToggle={handlePanelToggle}
               />
+              <div className="right-logo-container">
+                <img
+                  className="logo right-logo"
+                  src="/images/primary-navigation.png"
+                  alt="right logo"
+                />
+              </div>
             </HeaderGlobalBar>
             <HeaderPanel
               aria-label="Header Panel"
